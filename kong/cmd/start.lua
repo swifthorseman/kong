@@ -17,7 +17,9 @@ local function execute(args)
   local dao = assert(DAOFactory.new(conf))
   xpcall(function()
     assert(prefix_handler.prepare_prefix(conf, args.nginx_conf))
-    assert(dao:run_migrations())
+    if not args.disable_migrations then
+      assert(dao:run_migrations())
+    end
     assert(nginx_signals.start(conf))
     log("Kong started")
   end, function(e)
@@ -42,6 +44,7 @@ Options:
  -c,--conf    (optional string) configuration file
  -p,--prefix  (optional string) override prefix directory
  --nginx-conf (optional string) custom Nginx configuration template
+ --disable-migrations           disable migrations on the DB
 ]]
 
 return {
