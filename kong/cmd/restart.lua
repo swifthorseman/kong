@@ -41,7 +41,7 @@ Options:
  -c,--conf           (optional string) configuration file
  -p,--prefix         (optional string) prefix at which Kong should be running
  --nginx-conf        (optional string) custom Nginx configuration template
- --diable-migrations                   disable migrations on the DB
+ --no-migrations                       disable migrations on the DB
 ]]
 
 return {

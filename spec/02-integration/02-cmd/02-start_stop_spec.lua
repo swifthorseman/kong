@@ -113,6 +113,28 @@ describe("kong start/stop", function()
     end)
   end)
 
+  describe("--disable-migrations #u", function()
+    before_each(function()
+      helpers.dao:drop_schema()
+    end)
+    after_each(function()
+      helpers.dao:drop_schema()
+      helpers.dao:run_migrations()
+    end)
+
+    it("migration shouldn't run ", function()
+      assert(helpers.kong_exec("start --no-migrations --conf " ..
+                               helpers.test_conf_path))
+
+      local rows, err = helpers.dao.db:query([[
+          SELECT count(*) FROM schema_migrations
+        ]])
+      assert.is_nil(err)
+      assert.is_equal(0, rows[1].count)
+    end)
+  end)
+
+
   describe("errors", function()
     it("start inexistent Kong conf file", function()
       local ok, stderr = helpers.kong_exec "start --conf foobar.conf"
