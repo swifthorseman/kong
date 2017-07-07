@@ -122,15 +122,34 @@ describe("kong start/stop", function()
       helpers.dao:run_migrations()
     end)
 
-    it("migration shouldn't run ", function()
+    it("Kong shouldn't restart when no migration", function()
       assert(helpers.kong_exec("start --no-migrations --conf " ..
                                helpers.test_conf_path))
 
-      local rows, err = helpers.dao.db:query([[
-          SELECT count(*) FROM schema_migrations
+      local _, err = helpers.dao.db:query([[
+          DELETE FROM schema_migrations WHERE id='rate-limiting'
         ]])
       assert.is_nil(err)
-      assert.is_equal(0, rows[1].count)
+      assert.is_false(helpers.kong_exec("restart --no-migrations --conf " ..
+              helpers.test_conf_path))
+    end)
+    it("Kong should restart when migrations run", function()
+      assert(helpers.kong_exec("start --no-migrations --conf " ..
+              helpers.test_conf_path))
+
+      local _, err = helpers.dao.db:query([[
+          DELETE FROM schema_migrations WHERE id='rate-limiting'
+        ]])
+      assert.is_nil(err)
+
+      assert.is_false(helpers.kong_exec("restart --no-migrations --conf " ..
+              helpers.test_conf_path))
+
+      assert(helpers.kong_exec("migrations up --conf " ..
+              helpers.test_conf_path))
+
+      assert(helpers.kong_exec("restart --no-migrations --conf " ..
+              helpers.test_conf_path))
     end)
   end)
 
