@@ -352,7 +352,7 @@ return {
         end
 
         for i = 1, #rows do
-          if rows[i].options and 
+          if rows[i].options and
              rows[i].options.target == "request_host" or
              rows[i].options.target == "request_path" then
 
@@ -474,4 +474,13 @@ return {
       DROP TABLE nodes;
     ]],
   },
+  {
+    name = "2017-07-07-141911_client_ca",
+    up = [[
+      ALTER TABLE ssl_certificates ADD client_ca text;
+    ]],
+    down = [[
+      ALTER TABLE ssl_certificates DROP client_ca;
+    ]]
+  }
 }

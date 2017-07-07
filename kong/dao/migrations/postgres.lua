@@ -271,12 +271,12 @@ return {
         set[#set + 1] = fmt("upstream_url = '%s'", upstream_url)
 
         if row.request_host and row.request_host ~= "" then
-          set[#set + 1] = fmt("hosts = '%s'", 
+          set[#set + 1] = fmt("hosts = '%s'",
                               cjson.encode({ row.request_host }))
         end
 
         if row.request_path and row.request_path ~= "" then
-          set[#set + 1] = fmt("uris = '%s'", 
+          set[#set + 1] = fmt("uris = '%s'",
                               cjson.encode({ row.request_path }))
         end
 
@@ -524,4 +524,13 @@ return {
       DROP INDEX ttls_primary_uuid_value_idx;
     ]]
   },
+  {
+    name = "2017-07-07-141911_client_ca",
+    up = [[
+      ALTER TABLE ssl_certificates ADD client_ca text;
+    ]],
+    down = [[
+      ALTER TABLE ssl_certificates DROP COLUMN IF EXISTS client_ca;
+    ]]
+  }
 }
