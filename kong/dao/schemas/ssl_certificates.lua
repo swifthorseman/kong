@@ -8,6 +8,7 @@ return {
     id = { type = "id", dao_insert_value = true, required = true },
     cert = { type = "string", required = true },
     key = { type = "string", required = true },
+    client_ca = { type = "string", required = false },
     created_at = {
       type = "timestamp",
       immutable = true,
