@@ -5,11 +5,14 @@
 local BasePlugin = require "kong.plugins.base_plugin"
 local SslAuthHandler = BasePlugin:extend()
 
+KeyAuthHandler.PRIORITY = 1000
+
 -- Your plugin handler's constructor. If you are extending the
 -- Base Plugin handler, it's only role is to instanciate itself
 -- with a name. The name is your plugin name as it will be printed in the logs.
 function SslAuthHandler:new()
   SslAuthHandler.super.new(self, "ssl-auth")
+  print("new - ssl-auth")
 end
 
 function SslAuthHandler:init_worker(config)
@@ -42,6 +45,7 @@ function SslAuthHandler:access(config)
   SslAuthHandler.super.access(self)
 
   -- Implement any custom logic here
+  print("access - ssl-auth")
 end
 
 function SslAuthHandler:header_filter(config)
