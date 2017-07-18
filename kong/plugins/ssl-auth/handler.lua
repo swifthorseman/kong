@@ -5,7 +5,7 @@
 local BasePlugin = require "kong.plugins.base_plugin"
 local SslAuthHandler = BasePlugin:extend()
 
-KeyAuthHandler.PRIORITY = 1000
+SslAuthHandler.PRIORITY = 1000
 
 -- Your plugin handler's constructor. If you are extending the
 -- Base Plugin handler, it's only role is to instanciate itself
