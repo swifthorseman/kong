@@ -473,14 +473,5 @@ return {
     up = [[
       DROP TABLE nodes;
     ]],
-  },
-  {
-    name = "2017-07-07-141911_client_ca",
-    up = [[
-      ALTER TABLE ssl_certificates ADD client_ca text;
-    ]],
-    down = [[
-      ALTER TABLE ssl_certificates DROP client_ca;
-    ]]
   }
 }

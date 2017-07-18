@@ -523,14 +523,5 @@ return {
     down = [[
       DROP INDEX ttls_primary_uuid_value_idx;
     ]]
-  },
-  {
-    name = "2017-07-07-141911_client_ca",
-    up = [[
-      ALTER TABLE ssl_certificates ADD client_ca text;
-    ]],
-    down = [[
-      ALTER TABLE ssl_certificates DROP COLUMN IF EXISTS client_ca;
-    ]]
   }
 }
