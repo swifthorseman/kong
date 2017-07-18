@@ -198,6 +198,8 @@ return {
     methods = {type = "array", func = check_methods},
     strip_uri = {type = "boolean", default = true},
     https_only = {type = "boolean", default = false},
+    verify_depth = {type = "number", default = 1, func = check_u_int},
+    verify_client = {type = "boolean", default = false},
     http_if_terminated = {type = "boolean", default = false},
     upstream_url = {type = "url", required = true, func = validate_upstream_url},
     preserve_host = {type = "boolean", default = false},

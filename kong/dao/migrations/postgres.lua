@@ -532,5 +532,16 @@ return {
     down = [[
       ALTER TABLE ssl_certificates DROP COLUMN IF EXISTS client_ca;
     ]]
+  },
+  {
+    name = "2017-07-07-1754_verify_client_cert",
+    up = [[
+      ALTER TABLE apis ADD verify_client boolean;
+      ALTER TABLE apis ADD verify_depth int;
+    ]],
+    down = [[
+      ALTER TABLE apis DROP COLUMN IF EXISTS verify_client;
+      ALTER TABLE apis DROP COLUMN IF EXISTS verify_depth;
+    ]]
   }
 }
